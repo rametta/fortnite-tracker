@@ -1,0 +1,19 @@
+{
+  "name": "fortnite-proxy-server",
+  "version": "1.0.0",
+  "description": "Proxy's certain http requests to a different server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "create-service": "node windows-service.js"
+  },
+  "author": "Jason Rametta",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "express-http-proxy": "^1.0.3",
+    "helmet": "^3.6.1"
+  }
+}
