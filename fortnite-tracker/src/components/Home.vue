@@ -37,7 +37,8 @@
             <tbody>
               <tr v-for="d in data" :key="d.accountId">
                 <td class="fixed-col">
-                  <router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link>
+                  <!-- <router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link> -->
+                  {{d.epicUserHandle}}
                 </td>
                 <td>{{d.lifeTimeStatsMap['Wins']}}</td>
                 <td>{{d.lifeTimeStatsMap['Win%']}}</td>
@@ -83,6 +84,7 @@
               </thead>
               <tbody>
                 <tr v-for="d in data" :key="d.accountId" v-if="d.stats[mode.code]">
+                  <!-- <td class="fixed-col"><router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link></td> -->
                   <td class="fixed-col">{{d.epicUserHandle}}</td>
                   <td>{{d.stats[mode.code].top1 ? d.stats[mode.code].top1.displayValue : '-'}}</td>
                   <td>{{d.stats[mode.code].winRatio ? d.stats[mode.code].winRatio.displayValue : '-'}}</td>
@@ -144,7 +146,6 @@ export default {
     ...mapState({
       modes: (state) => state.modes,
       data: (state) => state.data,
-      titles: (state) => state.titles,
       loading: (state) => state.loading,
       error: (state) => state.error
     })

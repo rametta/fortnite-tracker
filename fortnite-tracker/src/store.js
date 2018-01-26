@@ -27,9 +27,6 @@ const mutations = {
   },
   error(state, bool) {
     state.error = bool
-  },
-  updateTitles(state, { titles }) {
-    state.title = titles
   }
 }
 
@@ -48,10 +45,6 @@ const actions = {
       .then((res) => res.map((r) => r.data))
       .then((data) => {
         data.forEach((d, i) => {
-          if (i === 0) {
-            commit('updateTitles', d.lifeTimeStats.map((s) => s.key))
-          }
-
           d.lifeTimeStatsMap = d.lifeTimeStats.reduce((acc, stat) => {
             acc[stat.key] = stat.value
             return acc
@@ -71,9 +64,7 @@ const actions = {
   }
 }
 
-const getters = {
-  user: (state, handle) => state.data.find((u) => u.epicUserHandle === handle)
-}
+const getters = {}
 
 export default new Vuex.Store({
   state,

@@ -4,7 +4,7 @@
     <div>
       <nav class="navbar navbar-dark bg-primary justify-content-between">
         <router-link to="/" class="navbar-brand">Victory Squad 🎉</router-link>
-        <button type="button" class="btn btn-light" @click="refreshData()">Refresh</button>
+        <button type="button" class="btn btn-light" @click="refreshData()"><i class="fas fa-sync-alt"></i></button>
       </nav>
     </div>
 
