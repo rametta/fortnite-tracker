@@ -13,13 +13,9 @@
     <div class="fade-in mt-3" v-if="!loading">
 
       <div class="container-fluid">
-        <div class="d-flex justify-content-between">
-          <h3>Lifetime</h3>
-          <button class="btn btn-primary" @click="refresh()">Refresh</button>
-        </div>
-
+        <h3>Lifetime</h3>
         <div v-fixedFirstCol class="table-responsive mt-3">
-          <table class="table table-sm">
+          <table class="table table-sm table-bordered">
             <thead>
                 <tr>
                   <th class="fixed-col">User</th>
@@ -40,7 +36,9 @@
             </thead>
             <tbody>
               <tr v-for="d in data" :key="d.accountId">
-                <td class="fixed-col">{{d.epicUserHandle}}</td>
+                <td class="fixed-col">
+                  <router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link>
+                </td>
                 <td>{{d.lifeTimeStatsMap['Wins']}}</td>
                 <td>{{d.lifeTimeStatsMap['Win%']}}</td>
                 <td>{{d.lifeTimeStatsMap['Top 3s']}}</td>
@@ -62,7 +60,7 @@
         <div class="mt-3" v-for="mode in modes" :key="mode.code">
           <h3>{{mode.name}}</h3>
           <div v-fixedFirstCol class="table-responsive mt-3">
-            <table class="table table-sm">
+            <table class="table table-sm table-bordered">
               <thead>
                 <tr>
                   <th class="fixed-col">User</th>
@@ -108,80 +106,26 @@
         </div>
       </div>
 
-      <div class="text-center p-3 mt-3 footer">
-        Made with 💖 by <a href="http://rametta.org" target="_blank">Jason</a>
-      </div>
-
     </div>
 
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import Loader from './Loader'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
   components: { Loader },
   data() {
-    return {
-      api: '/v1/profile/xbox/',
-      apiHeader: { 'TRN-Api-Key': '3fdd40fe-6913-4b08-8806-d61c600680a9' },
-      users: ['rametta', 'ehlouis', 'cryonical', 'veemerk'],
-      modes: [
-        { name: 'Squad', code: 'p9' },
-        { name: 'Duo', code: 'p10' },
-        { name: 'Solo', code: 'p2' }
-      ],
-      data: [],
-      loading: false,
-      error: false
-    }
+    return {}
   },
   created() {
-    this.refresh()
+    this.refreshData()
   },
   methods: {
-    refresh() {
-      this.error = false
-      this.loading = true
-
-      const promises = this.users.map((user) => this.getData(user))
-
-      setTimeout(() => {
-        Promise.all(promises)
-          .then((res) => res.map((r) => r.data))
-          .then((data) => this.processData(data))
-          .catch(() => (this.error = true))
-      }, 100)
-    },
-    getData(user) {
-      return axios.get(`${this.api}${user}`, {
-        headers: this.apiHeader
-      })
-    },
-    processData(data) {
-      data.forEach((d, i) => {
-        if (i === 0) {
-          this.titles = d.lifeTimeStats.map((s) => s.key)
-        }
-
-        d.lifeTimeStatsMap = d.lifeTimeStats.reduce((acc, stat) => {
-          acc[stat.key] = stat.value
-          return acc
-        }, {})
-      })
-
-      data = data.sort(
-        (a, b) =>
-          parseFloat(b.lifeTimeStatsMap['K/d']) -
-          parseFloat(a.lifeTimeStatsMap['K/d'])
-      )
-
-      this.data = data
-      this.loading = false
-    }
+    ...mapActions(['refreshData'])
   },
   directives: {
     fixedFirstCol: {
@@ -195,6 +139,15 @@ export default {
         })
       }
     }
+  },
+  computed: {
+    ...mapState({
+      modes: (state) => state.modes,
+      data: (state) => state.data,
+      titles: (state) => state.titles,
+      loading: (state) => state.loading,
+      error: (state) => state.error
+    })
   }
 }
 </script>
@@ -219,9 +172,5 @@ table {
   to {
     opacity: 1;
   }
-}
-
-.footer {
-  background: #e8e8e8;
 }
 </style>
