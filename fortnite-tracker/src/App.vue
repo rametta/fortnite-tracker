@@ -4,7 +4,11 @@
     <div>
       <nav class="navbar navbar-dark bg-primary justify-content-between">
         <router-link to="/" class="navbar-brand">Victory Squad 🎉</router-link>
-        <button type="button" class="btn btn-light" @click="refreshData()"><i class="fas fa-sync-alt"></i></button>
+        <button type="button" class="btn btn-light" @click="refreshData()">
+          <div :class="{ 'fa-spin': loading }">
+            <i class="fas fa-sync"></i>
+          </div>
+        </button>
       </nav>
     </div>
 
@@ -19,12 +23,17 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'App',
   methods: {
     ...mapActions(['refreshData'])
+  },
+  computed: {
+    ...mapState({
+      loading: state => state.loading
+    })
   }
 }
 </script>
@@ -39,5 +48,8 @@ body {
 }
 .content {
   flex-grow: 1;
+}
+.hand {
+  cursor: pointer;
 }
 </style>

@@ -19,93 +19,64 @@
             <thead>
                 <tr>
                   <th class="fixed-col">User</th>
-                  <th>Wins</th>
-                  <th>Win %</th>
-                  <th>Top 3</th>
-                  <th>Top 5</th>
-                  <th>Top 6</th>
-                  <th>Top 12</th>
-                  <th>Top 25</th>
-                  <th>Kills</th>
-                  <th>KD</th>
-                  <th>Kills/Min</th>
-                  <th>Score</th>
-                  <th>Matches Played</th>
-                  <th>Avg. Time Played</th>
+                  <th class="hand" v-for="field in lifetime.fields" :key="field.code" @click="setLifetimeFieldSort({ field: field.code, isDesc: !lifetime.sortDesc })">
+                    {{field.name}}
+                    <span v-if="lifetime.sortField === field.code">
+                      <i class="fas fa-sort-numeric-down"></i>
+                      <!-- <i class="fas fa-sort-numeric-up" v-if="!modeData[mode.code].sortDesc"></i> -->
+                      <!-- <i class="fas" :class="modeData[mode.code].sortDesc ? 'fa-sort-numeric-down' : 'fa-sort-numeric-up'"></i> -->
+                    </span>
+                  </th>
                 </tr>
             </thead>
             <tbody>
-              <tr v-for="d in data" :key="d.accountId">
+              <tr v-for="u in lifetime.data" :key="u.user">
+
                 <td class="fixed-col">
-                  <!-- <router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link> -->
-                  {{d.epicUserHandle}}
+                  <!-- <router-link :to="{ name: 'player', params: { id: u.user }}">{{u.user}}</router-link> -->
+                  {{u.user}}
                 </td>
-                <td>{{d.lifeTimeStatsMap['Wins']}}</td>
-                <td>{{d.lifeTimeStatsMap['Win%']}}</td>
-                <td>{{d.lifeTimeStatsMap['Top 3s']}}</td>
-                <td>{{d.lifeTimeStatsMap['Top 5s']}}</td>
-                <td>{{d.lifeTimeStatsMap['Top 6s']}}</td>
-                <td>{{d.lifeTimeStatsMap['Top 12s']}}</td>
-                <td>{{d.lifeTimeStatsMap['Top 25s']}}</td>
-                <td>{{d.lifeTimeStatsMap['Kills']}}</td>
-                <td>{{d.lifeTimeStatsMap['K/d']}}</td>
-                <td>{{d.lifeTimeStatsMap['Kills Per Min']}}</td>
-                <td>{{d.lifeTimeStatsMap['Score']}}</td>
-                <td>{{d.lifeTimeStatsMap['Matches Played']}}</td>
-                <td>{{d.lifeTimeStatsMap['Avg Survival Time']}}</td>
+
+                <td v-for="field in lifetime.fields" :key="field.code">
+                  {{u.stats[field.code] ? u.stats[field.code] : '-'}}
+                </td>
+
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div class="mt-3" v-for="mode in modes" :key="mode.code">
+        <div v-for="mode in modes" class="mt-3" :key="mode.code">
           <h3>{{mode.name}}</h3>
           <div v-fixedFirstCol class="table-responsive mt-3">
             <table class="table table-sm table-bordered">
               <thead>
                 <tr>
                   <th class="fixed-col">User</th>
-                  <th>Wins</th>
-                  <th>Win %</th>
-                  <th>Top 3</th>
-                  <th>Top 5</th>
-                  <th>Top 6</th>
-                  <th>Top 10</th>
-                  <th>Top 12</th>
-                  <th>Top 25</th>
-                  <th>Kills</th>
-                  <th>KD</th>
-                  <th>Kills/Min</th>
-                  <th>Kills/Game</th>
-                  <th>Score/Min</th>
-                  <th>Score/Game</th>
-                  <th>Avg. Time Played</th>
+                  <th class="hand" v-for="field in modeData[mode.code].fields" :key="field.code" @click="setFieldSort({ mode: mode.code, field: field.code, isDesc: !modeData[mode.code].sortDesc })">
+                    {{field.name}}
+                    <span v-if="modeData[mode.code].sortField === field.code">
+                      <i class="fas fa-sort-numeric-down"></i>
+                      <!-- <i class="fas fa-sort-numeric-up" v-if="!modeData[mode.code].sortDesc"></i> -->
+                      <!-- <i class="fas" :class="modeData[mode.code].sortDesc ? 'fa-sort-numeric-down' : 'fa-sort-numeric-up'"></i> -->
+                    </span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="d in data" :key="d.accountId" v-if="d.stats[mode.code]">
-                  <!-- <td class="fixed-col"><router-link :to="{ name: 'player', params: { id: d.epicUserHandle }}">{{d.epicUserHandle}}</router-link></td> -->
-                  <td class="fixed-col">{{d.epicUserHandle}}</td>
-                  <td>{{d.stats[mode.code].top1 ? d.stats[mode.code].top1.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].winRatio ? d.stats[mode.code].winRatio.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top3 ? d.stats[mode.code].top3.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top5 ? d.stats[mode.code].top5.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top6 ? d.stats[mode.code].top6.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top10 ? d.stats[mode.code].top10.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top12 ? d.stats[mode.code].top12.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].top25 ? d.stats[mode.code].top25.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].kills ? d.stats[mode.code].kills.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].kd ? d.stats[mode.code].kd.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].kpm ? d.stats[mode.code].kpm.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].kpg ? d.stats[mode.code].kpg.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].scorePerMin ? d.stats[mode.code].scorePerMin.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].scorePerMatch ? d.stats[mode.code].scorePerMatch.displayValue : '-'}}</td>
-                  <td>{{d.stats[mode.code].avgTimePlayed ? d.stats[mode.code].avgTimePlayed.displayValue : '-'}}</td>
+                <tr v-for="u in modeData[mode.code].data" :key="u.user">
+                  <!-- <td class="fixed-col"><router-link :to="{ name: 'player', params: { id: u.user }}">{{u.user}}</router-link></td> -->
+                  <td class="fixed-col">{{u.user}}</td>
+
+                  <td v-for="field in modeData[mode.code].fields" :key="field.code">
+                    {{u.stats[field.code] ? u.stats[field.code].displayValue : '-'}}
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
       </div>
 
     </div>
@@ -115,26 +86,24 @@
 
 <script>
 import Loader from './Loader'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
   components: { Loader },
-  data() {
-    return {}
-  },
   created() {
     this.refreshData()
   },
   methods: {
-    ...mapActions(['refreshData'])
+    ...mapActions(['refreshData']),
+    ...mapMutations(['setFieldSort', 'setLifetimeFieldSort'])
   },
   directives: {
     fixedFirstCol: {
       inserted(el) {
         const elems = el.getElementsByClassName('fixed-col')
 
-        el.addEventListener('scroll', (e) => {
+        el.addEventListener('scroll', e => {
           for (let i = 0; i < elems.length; i++) {
             elems[i].style.transform = `translateX(${e.target.scrollLeft}px)`
           }
@@ -144,10 +113,11 @@ export default {
   },
   computed: {
     ...mapState({
-      modes: (state) => state.modes,
-      data: (state) => state.data,
-      loading: (state) => state.loading,
-      error: (state) => state.error
+      modes: state => state.modes,
+      modeData: state => state.modeData,
+      lifetime: state => state.lifetime,
+      loading: state => state.loading,
+      error: state => state.error
     })
   }
 }
