@@ -1,21 +1,10 @@
 <template>
-  <div>
-
-    <div class="ctnr">
-      <div class="dot dot-1"></div>
-      <div class="dot dot-2"></div>
-      <div class="dot dot-3"></div>
-    </div>
-
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7"/>
-        </filter>
-      </defs>
-    </svg>
-
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
   </div>
 </template>
 
@@ -26,122 +15,65 @@ export default {
 </script>
 
 <style scoped>
-.ctnr {
-  width: 200px;
-  height: 200px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: auto;
-  filter: url('#goo');
-  animation: rotate-move 2s ease-in-out infinite;
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
 }
 
-.dot {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background-color: #000;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+.spinner > div {
+  background-color: #007bff;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
 
-.dot-3 {
-  background-color: #f74d75;
-  animation: dot-3-move 2s ease infinite, index 6s ease infinite;
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
 }
 
-.dot-2 {
-  background-color: #10beae;
-  animation: dot-2-move 2s ease infinite, index 6s -4s ease infinite;
+.spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
 }
 
-.dot-1 {
-  background-color: #ffe386;
-  animation: dot-1-move 2s ease infinite, index 6s -2s ease infinite;
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
 }
 
-@keyframes dot-3-move {
-  20% {
-    transform: scale(1);
-  }
-  45% {
-    transform: translateY(-18px) scale(0.45);
-  }
-  60% {
-    transform: translateY(-90px) scale(0.45);
-  }
-  80% {
-    transform: translateY(-90px) scale(0.45);
-  }
-  100% {
-    transform: translateY(0px) scale(1);
-  }
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 
-@keyframes dot-2-move {
-  20% {
-    transform: scale(1);
-  }
-  45% {
-    transform: translate(-16px, 12px) scale(0.45);
-  }
-  60% {
-    transform: translate(-80px, 60px) scale(0.45);
-  }
-  80% {
-    transform: translate(-80px, 60px) scale(0.45);
-  }
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-}
-
-@keyframes dot-1-move {
-  20% {
-    transform: scale(1);
-  }
-  45% {
-    transform: translate(16px, 12px) scale(0.45);
-  }
-  60% {
-    transform: translate(80px, 60px) scale(0.45);
-  }
-  80% {
-    transform: translate(80px, 60px) scale(0.45);
-  }
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-}
-
-@keyframes rotate-move {
-  55% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  80% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes index {
+@-webkit-keyframes sk-stretchdelay {
   0%,
+  40%,
   100% {
-    z-index: 3;
+    -webkit-transform: scaleY(0.4);
   }
-  33.3% {
-    z-index: 2;
+  20% {
+    -webkit-transform: scaleY(1);
   }
-  66.6% {
-    z-index: 1;
+}
+
+@keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
   }
 }
 </style>
