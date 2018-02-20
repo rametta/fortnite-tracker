@@ -1,21 +1,14 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+.DS_Store
+node_modules/
+/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# compiled output
-/dist
-
-# dependencies
-/node_modules
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-npm-debug.log
-/daemon
-
-# IDE - WebStorm
-.idea/*
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

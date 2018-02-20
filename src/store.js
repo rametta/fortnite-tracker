@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const state = {
   api: '/v1/profile/xbox/',
-  apiHeader: { 'TRN-Api-Key': '3fdd40fe-6913-4b08-8806-d61c600680a9' },
+  // apiHeader: { 'TRN-Api-Key': '3fdd40fe-6913-4b08-8806-d61c600680a9' },
   users: ['rametta', 'ehlouis', 'cryonical', 'veemerk'],
   modes: [
     { name: 'Squad', code: 'p9' },
@@ -190,7 +190,7 @@ const actions = {
 
     const promises = state.users.map((user) =>
       axios.get(`${state.api}${user}`, {
-        headers: state.apiHeader
+        // headers: state.apiHeader
       })
     )
 
