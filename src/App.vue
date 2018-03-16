@@ -1,29 +1,38 @@
 <template>
-  <div class="d-flex flex-column justify-content-between h-100">
+  <v-app dark>
 
-    <div>
-      <nav class="navbar navbar-dark bg-primary justify-content-between">
-        <router-link to="/" class="navbar-brand">Victory Squad 🎉</router-link>
-        <button type="button" class="btn btn-light" @click="refreshData()">
-          <div :class="{ 'fa-spin': loading }">
-            <i class="fas fa-sync"></i>
-          </div>
-        </button>
-      </nav>
-    </div>
+    <v-toolbar app fixed>
+      <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
+    </v-toolbar>
 
-    <div class="content">
+    <v-content>
       <router-view />
-    </div>
+    </v-content>
 
-    <div class="text-center p-3 mt-3 bg-light">
-      Made with 💖 by <a href="http://rametta.org" target="_blank">Jason</a>
-    </div>
-  </div>
+    <v-footer app fixed>
+      <div class="vic-footer">
+        Made with 💖 by <a href="http://rametta.org" target="_blank">Jason</a>
+      </div>
+    </v-footer>
+
+  </v-app>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import firebase from 'firebase'
+
+// Initialize Firebase
+const config = {
+  apiKey: 'AIzaSyBf2jmiNQyaG4Br9vq1CU3-VCBd2qMe-Yo',
+  authDomain: 'fortnite-ingest.firebaseapp.com',
+  databaseURL: 'https://fortnite-ingest.firebaseio.com',
+  projectId: 'fortnite-ingest',
+  storageBucket: 'fortnite-ingest.appspot.com',
+  messagingSenderId: '11639620297'
+}
+
+firebase.initializeApp(config)
 
 export default {
   name: 'App',
@@ -39,17 +48,8 @@ export default {
 </script>
 
 <style>
-html {
-  height: 100%;
-}
-body {
-  margin: 0;
-  height: 100%;
-}
-.content {
-  flex-grow: 1;
-}
-.hand {
-  cursor: pointer;
+.vic-footer {
+  text-align: center;
+  width: 100%;
 }
 </style>
