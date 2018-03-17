@@ -6,12 +6,14 @@
     </v-toolbar>
 
     <v-content>
-      <router-view />
+      <v-container fluid>
+        <router-view />
+      </v-container>
     </v-content>
 
     <v-footer app fixed>
       <div class="vic-footer">
-        Made with 💖 by <a href="http://rametta.org" target="_blank">Jason</a>
+        Made with 🥩 by <a href="http://rametta.org" target="_blank">Jason</a>
       </div>
     </v-footer>
 
