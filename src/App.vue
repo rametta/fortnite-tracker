@@ -2,12 +2,16 @@
   <v-app dark>
 
     <v-toolbar app fixed>
-      <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
+      <router-link :to="{name: 'home'}" class="home-link white--text">
+        <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
+      </router-link>
     </v-toolbar>
 
     <v-content>
       <v-container fluid>
-        <router-view />
+        <transition name="fade">
+          <router-view />
+        </transition>
       </v-container>
     </v-content>
 
@@ -21,7 +25,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import firebase from 'firebase'
 
 // Initialize Firebase
@@ -34,16 +38,26 @@ const config = {
   messagingSenderId: '11639620297'
 }
 
-firebase.initializeApp(config)
+const app = firebase.initializeApp(config)
+const db = app.database()
 
 export default {
   name: 'App',
   methods: {
-    ...mapActions(['refreshData'])
+    ...mapMutations(['updateData', 'setLoading'])
   },
   computed: {
     ...mapState({
       loading: state => state.loading
+    })
+  },
+  created() {
+    this.setLoading(true)
+    db.ref('/data').on('value', data => {
+      this.setLoading(false)
+      const d = data.val()
+      const arr = Object.keys(d).map(key => d[key])
+      this.updateData({ data: arr })
     })
   }
 }
@@ -53,5 +67,23 @@ export default {
 .vic-footer {
   text-align: center;
   width: 100%;
+}
+.home-link {
+  text-decoration: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

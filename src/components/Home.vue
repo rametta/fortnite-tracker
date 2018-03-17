@@ -23,9 +23,11 @@
           class="elevation-2"
         >
           <template slot="items" slot-scope="props">
-            <td nowrap v-for="field in lifetime.fields" :key="field.value">
-              {{props.item[field.value] ? props.item[field.value] : '-'}}
-            </td>
+            <router-link tag="tr" :to="{ name: 'player', params: { id: props.item.user } }">
+              <td nowrap v-for="field in lifetime.fields" :key="field.value">
+                {{props.item[field.value] ? props.item[field.value] : '-'}}
+              </td>
+            </router-link>
           </template>
         </v-data-table>
       </v-flex>
@@ -44,9 +46,11 @@
           class="elevation-2"
         >
           <template slot="items" slot-scope="props">
-            <td v-for="field in modeData[mode.code].fields" :key="field.value">
-              {{props.item[field.value] ? props.item[field.value].displayValue : '-'}}
-            </td>
+            <router-link tag="tr" :to="{ name: 'player', params: { id: props.item.user.displayValue } }">
+              <td v-for="field in modeData[mode.code].fields" :key="field.value">
+                {{props.item[field.value] ? props.item[field.value].displayValue : '-'}}
+              </td>
+            </router-link>
           </template>
         </v-data-table>
 
@@ -58,10 +62,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import firebase from 'firebase'
-
-const db = firebase.database()
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
@@ -97,17 +98,7 @@ export default {
       }
     }
   }),
-  created() {
-    this.setLoading(true)
-    db.ref('/data').on('value', data => {
-      this.setLoading(false)
-      const d = data.val()
-      const arr = Object.keys(d).map(key => d[key])
-      this.updateData({ data: arr })
-    })
-  },
   methods: {
-    ...mapMutations(['updateData', 'setLoading']),
     lifetimeSort(items, index, isDesc) {
       // Don't sort if no column
       if (!index) return items
