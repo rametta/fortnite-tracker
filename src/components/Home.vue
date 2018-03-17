@@ -9,7 +9,7 @@
 
       <v-progress-circular v-if="!error" indeterminate :size="70" :width="7"></v-progress-circular>
     </v-layout>
-    <v-layout column>
+    <v-layout v-if="!loading" column>
 
       <v-flex>
         <h3 class="pb-2">Lifetime</h3>
@@ -80,6 +80,18 @@ export default {
         descending: true
       },
       p10: {
+        sortBy: 'top1',
+        descending: true
+      },
+      curr_p2: {
+        sortBy: 'top1',
+        descending: true
+      },
+      curr_p9: {
+        sortBy: 'top1',
+        descending: true
+      },
+      curr_p10: {
         sortBy: 'top1',
         descending: true
       }
