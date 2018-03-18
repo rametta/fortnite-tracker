@@ -17,7 +17,7 @@
 
     <v-footer app fixed>
       <div class="vic-footer">
-        Made with 🥩 by <a href="http://rametta.org" target="_blank">Jason</a>
+        Made with {{getEmote}} by <a href="http://rametta.org" target="_blank">Jason</a>
       </div>
     </v-footer>
 
@@ -43,13 +43,41 @@ const db = app.database()
 
 export default {
   name: 'App',
+  data: () => ({
+    emojis: [
+      '🍺',
+      '🍓',
+      '🥚',
+      '🥘',
+      '🍌',
+      '🍗',
+      '🍟',
+      '🍊',
+      '🥐',
+      '🥜',
+      '🍕',
+      '🍔',
+      '🍪',
+      '🥤',
+      '🍿',
+      '🥧',
+      '🍞',
+      '🍳',
+      '☕️',
+      '🍩',
+      '🍉'
+    ]
+  }),
   methods: {
     ...mapMutations(['updateData', 'setLoading'])
   },
   computed: {
     ...mapState({
       loading: state => state.loading
-    })
+    }),
+    getEmote() {
+      return this.emojis[Math.floor(Math.random() * this.emojis.length)]
+    }
   },
   created() {
     this.setLoading(true)

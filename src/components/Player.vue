@@ -1,13 +1,53 @@
 <template>
     <div>
+
       <v-layout>
         <v-flex class="mx-3">
           <div class="player-code">{{$route.params.id}}</div>
-          <div>Last 10 matches</div>
         </v-flex>
       </v-layout>
-      <v-layout row wrap>
-        <v-flex xl3 lg4 md6 xs12 v-for="match in recentMatches[$route.params.id]" :key="match.id" class="pa-3">
+
+      <v-layout v-if="recent[$route.params.id]">
+        <v-flex class="ma-3">
+
+          <v-card>
+            <v-card-title>
+
+              <v-layout row wrap justify-space-between>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <div class="big grey--text text--lighten-1">Matches</div>
+                  <div class="big-num">{{recent[$route.params.id].totals.matches}}</div>
+                </v-flex>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <h4 class="big grey--text text--lighten-1">Kills</h4>
+                  <div class="big-num">{{recent[$route.params.id].totals.kills}}</div>
+                </v-flex>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <h4 class="big grey--text text--lighten-1">KPM</h4>
+                  <div class="big-num">{{getKPM(recent[$route.params.id].totals.kills, recent[$route.params.id].totals.matches)}}</div>
+                </v-flex>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <h4 class="big grey--text text--lighten-1">Wins</h4>
+                  <div class="big-num">{{recent[$route.params.id].totals.top1}}</div>
+                </v-flex>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <h4 class="big grey--text text--lighten-1">Top 3</h4>
+                  <div class="big-num">{{recent[$route.params.id].totals.top3}}</div>
+                </v-flex>
+                <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                  <h4 class="big grey--text text--lighten-1">Top 6</h4>
+                  <div class="big-num">{{recent[$route.params.id].totals.top6}}</div>
+                </v-flex>
+              </v-layout>
+
+            </v-card-title>
+          </v-card>
+
+        </v-flex>
+      </v-layout>
+
+      <v-layout row wrap v-if="recent[$route.params.id]">
+        <v-flex xl3 lg4 md6 xs12 v-for="match in recent[$route.params.id].matches" :key="match.id" class="pa-3">
           <v-card :color="match.top1 === 1 ? 'green': ''">
             <v-card-title>
 
@@ -44,7 +84,7 @@ export default {
       modes: state => state.modes,
       modeData: state => state.modeData,
       lifetime: state => state.lifetime,
-      recentMatches: state => state.recentMatches,
+      recent: state => state.recent,
       loading: state => state.loading,
       error: state => state.error
     })
@@ -59,6 +99,9 @@ export default {
     },
     cleanChange(change) {
       return change.toFixed(1)
+    },
+    getKPM(kills, matches) {
+      return (kills / matches).toFixed(2)
     }
   }
 }
@@ -66,9 +109,12 @@ export default {
 
 <style scoped>
 .player-code {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 .big {
   font-size: 1.3em;
+}
+.big-num {
+  font-size: 2.5em;
 }
 </style>
