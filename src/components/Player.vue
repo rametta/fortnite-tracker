@@ -61,7 +61,7 @@
                   </div>
                 </v-flex>
                 <v-flex d-flex row>
-                  <div>{{match.kills}} Kills</div>
+                  <div :class="{'red--text': !match.kills}">{{match.kills}} {{match.kills === 1 ? 'kill' : 'kills'}}</div>
                   <div class="text-xs-right">+{{match.score}} Score</div>
                 </v-flex>
                 <small :class="match.top1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(match.dateCollected)}}</small>
