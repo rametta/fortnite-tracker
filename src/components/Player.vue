@@ -71,14 +71,55 @@
           </v-card>
         </v-flex>
       </v-layout>
+
+      <v-layout class="table__overflow">
+        <v-flex class="mt-3 mx-3">
+          <v-card>
+            <v-card-title>
+
+              <v-flex>
+                <player-chart :chart-data="chartData" :options="options" />
+              </v-flex>
+
+            </v-card-title>
+          </v-card>
+        </v-flex>
+      </v-layout>
+
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import firebase from 'firebase'
+import PlayerChart from './PlayerChart'
+
+const db = firebase.database()
 
 export default {
   name: 'player',
+  components: { PlayerChart },
+  data: () => ({
+    chartData: {},
+    options: { responsive: true, maintainAspectRatio: false }
+  }),
+  created() {
+    db.ref(`/matches/${this.$route.params.id}`).on('value', snap => {
+      const val = snap.val()
+      const keys = Object.keys(val)
+      const labels = keys.map(key => new Date(val[key].d).toLocaleDateString())
+
+      const dsKills = {
+        label: 'Kills',
+        backgroundColor: '#2196F3',
+        data: keys.map(key => val[key].k)
+      }
+
+      const datasets = [dsKills]
+
+      this.$set(this, 'chartData', { labels, datasets })
+    })
+  },
   computed: {
     ...mapState({
       modes: state => state.modes,
