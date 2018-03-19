@@ -13,16 +13,6 @@ const state = {
     { name: 'Current Season Solo', code: 'curr_p2' }
   ],
 
-  totalStats: ['kills', 'top1', 'top3', 'top6', 'matches'],
-
-  // recent: {
-  //   [playerId: string]: {
-  //     matches: matches[],
-  //     totals: { [key: string]: number }
-  //   }
-  // }
-  recent: {},
-
   lifetime: {
     fields: [
       { text: 'User', value: 'user' },
@@ -209,23 +199,6 @@ const mutations = {
           p.stats[mode.code].user = { displayValue: p.epicUserHandle }
           return p.stats[mode.code]
         })
-    })
-
-    // Recent matches
-    data.forEach((d) => {
-      const totals = d.recentMatches.reduce((total, match) => {
-        state.totalStats.forEach((stat) => {
-          if (!total[stat]) {
-            total[stat] = match[stat]
-          } else {
-            total[stat] += match[stat]
-          }
-        })
-        return total
-      }, {})
-
-      const val = { matches: d.recentMatches, totals }
-      Vue.set(state.recent, d.epicUserHandle, val)
     })
   },
   setLoading(state, bool) {

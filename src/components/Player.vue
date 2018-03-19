@@ -1,14 +1,17 @@
 <template>
-    <div>
+  <div>
 
+    <v-layout>
+      <v-flex class="mx-3">
+        <div class="player-code">{{$route.params.id}}</div>
+      </v-flex>
+    </v-layout>
+
+    <div v-for="date in groupMatchesDates" :key="date">
       <v-layout>
-        <v-flex class="mx-3">
-          <div class="player-code">{{$route.params.id}}</div>
-        </v-flex>
-      </v-layout>
-
-      <v-layout v-if="recent[$route.params.id]">
         <v-flex class="ma-3">
+
+          <h3>{{date}}</h3>
 
           <v-card>
             <v-card-title>
@@ -16,27 +19,27 @@
               <v-layout row wrap justify-space-between>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <div class="big grey--text text--lighten-1">Matches</div>
-                  <div class="big-num">{{recent[$route.params.id].totals.matches}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].m}}</div>
                 </v-flex>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <h4 class="big grey--text text--lighten-1">Kills</h4>
-                  <div class="big-num">{{recent[$route.params.id].totals.kills}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].k}}</div>
                 </v-flex>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <h4 class="big grey--text text--lighten-1">KPM</h4>
-                  <div class="big-num">{{getKPM(recent[$route.params.id].totals.kills, recent[$route.params.id].totals.matches)}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].kpm}}</div>
                 </v-flex>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <h4 class="big grey--text text--lighten-1">Wins</h4>
-                  <div class="big-num">{{recent[$route.params.id].totals.top1}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].t1}}</div>
                 </v-flex>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <h4 class="big grey--text text--lighten-1">Top 3</h4>
-                  <div class="big-num">{{recent[$route.params.id].totals.top3}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].t3}}</div>
                 </v-flex>
                 <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
                   <h4 class="big grey--text text--lighten-1">Top 6</h4>
-                  <div class="big-num">{{recent[$route.params.id].totals.top6}}</div>
+                  <div class="big-num">{{groupedMatchesSummaries[date].t6}}</div>
                 </v-flex>
               </v-layout>
 
@@ -46,47 +49,52 @@
         </v-flex>
       </v-layout>
 
-      <v-layout row wrap v-if="recent[$route.params.id]">
-        <v-flex xl3 lg4 md6 xs12 v-for="match in recent[$route.params.id].matches" :key="match.id" class="pa-3">
-          <v-card :color="match.top1 === 1 ? 'green': ''">
+      <v-layout row wrap>
+        <v-flex xl3 lg4 md6 xs12 v-for="m in groupedMatches[date]" :key="m.id" class="pa-3">
+          <v-card :color="m.t1 === 1 ? 'green': ''">
             <v-card-title>
 
               <v-flex column>
                 <v-flex d-flex row v-once class="big">
-                  <div>{{getMode(match.playlist)}}</div>
+                  <div>{{getMode(m.p)}}
+                    <!-- <div class="text-xs-center">
+                      <v-chip small color="blue">Top 3</v-chip>
+                    </div> -->
+                  </div>
                   <div class="text-xs-right">
-                    <v-icon v-if="match.trnRatingChange > 0" color="green accent-3">keyboard_arrow_up</v-icon>
-                    <v-icon v-if="match.trnRatingChange < 0" color="red">keyboard_arrow_down</v-icon>
-                    {{cleanChange(match.trnRatingChange)}}
+                    <v-icon v-if="m.c > 0" color="green accent-3">keyboard_arrow_up</v-icon>
+                    <v-icon v-if="m.c < 0" color="red">keyboard_arrow_down</v-icon>
+                    {{cleanChange(m.c)}}
                   </div>
                 </v-flex>
                 <v-flex d-flex row>
-                  <div :class="{'red--text': !match.kills}">{{match.kills}} {{match.kills === 1 ? 'kill' : 'kills'}}</div>
-                  <div class="text-xs-right">+{{match.score}} Score</div>
+                  <div :class="{'red--text': !m.k}">{{m.k}} {{m.k === 1 ? 'kill' : 'kills'}}</div>
+                  <div class="text-xs-right">+{{m.s}} Score</div>
                 </v-flex>
-                <small :class="match.top1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(match.dateCollected)}}</small>
+                <small :class="m.t1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(m.d)}}</small>
               </v-flex>
 
             </v-card-title>
           </v-card>
         </v-flex>
       </v-layout>
-
-      <v-layout class="table__overflow">
-        <v-flex class="mt-3 mx-3">
-          <v-card>
-            <v-card-title>
-
-              <v-flex>
-                <player-chart :chart-data="chartData" :options="options" />
-              </v-flex>
-
-            </v-card-title>
-          </v-card>
-        </v-flex>
-      </v-layout>
-
     </div>
+
+    <v-layout class="table__overflow">
+      <v-flex class="mt-3 mx-3">
+        <v-card>
+          <v-card-title>
+
+            <v-flex>
+              <player-chart :chart-data="chartData" :options="options" />
+            </v-flex>
+
+          </v-card-title>
+        </v-card>
+      </v-flex>
+    </v-layout>
+
+  </div>
 </template>
 
 <script>
@@ -101,31 +109,66 @@ export default {
   components: { PlayerChart },
   data: () => ({
     chartData: {},
-    options: { responsive: true, maintainAspectRatio: false }
+    options: { responsive: true, maintainAspectRatio: false },
+    groupMatchesDates: [],
+    groupedMatches: {},
+    groupedMatchesSummaries: {}
   }),
   created() {
-    db.ref(`/matches/${this.$route.params.id}`).on('value', snap => {
-      const val = snap.val()
-      const keys = Object.keys(val)
-      const labels = keys.map(key => new Date(val[key].d).toLocaleDateString())
+    db
+      .ref(`/matches/${this.$route.params.id}`)
+      .orderByChild('d')
+      .limitToLast(30)
+      .once('value', snap => {
+        const matchesMap = snap.val()
+        const keys = Object.keys(matchesMap)
+        const matches = keys.map(key => matchesMap[key]).reverse()
 
-      const dsKills = {
-        label: 'Kills',
-        backgroundColor: '#2196F3',
-        data: keys.map(key => val[key].k)
-      }
+        // Group matches by date
+        matches.forEach(match => {
+          const d = new Date(match.d).toLocaleDateString()
+          const shortD = d.substring(0, 10)
 
-      const datasets = [dsKills]
+          if (this.groupedMatches[shortD] === undefined) {
+            this.groupMatchesDates.push(shortD)
+            this.groupedMatches[shortD] = []
+          }
+          this.groupedMatches[shortD].push(match)
+        })
 
-      this.$set(this, 'chartData', { labels, datasets })
-    })
+        // Grouped matches summaries
+        this.groupMatchesDates.forEach(date => {
+          const groupSummary = { m: 0, k: 0, kpm: 0, t1: 0, t3: 0, t6: 0 }
+          this.groupedMatches[date].forEach(match => {
+            groupSummary.m++
+            groupSummary.k += match.k ? match.k : 0
+            groupSummary.t1 += match.t1 ? match.t1 : 0
+            groupSummary.t3 += match.t3 ? match.t3 : 0
+            groupSummary.t6 += match.t6 ? match.t6 : 0
+          })
+          groupSummary.kpm = this.getKPM(groupSummary.k, groupSummary.m)
+          this.groupedMatchesSummaries[date] = groupSummary
+        })
+
+        // Chart
+        const labels = matches
+          .map(match => new Date(match.d).toLocaleDateString())
+          .reverse()
+
+        const dsKills = {
+          label: 'Kills',
+          backgroundColor: '#2196F3',
+          data: matches.map(match => match.k).reverse()
+        }
+
+        const datasets = [dsKills]
+
+        this.$set(this, 'chartData', { labels, datasets })
+      })
   },
   computed: {
     ...mapState({
       modes: state => state.modes,
-      modeData: state => state.modeData,
-      lifetime: state => state.lifetime,
-      recent: state => state.recent,
       loading: state => state.loading,
       error: state => state.error
     })
@@ -142,7 +185,8 @@ export default {
       return change.toFixed(1)
     },
     getKPM(kills, matches) {
-      return (kills / matches).toFixed(2)
+      if (!kills) return 0
+      return (kills / (matches || 1)).toFixed(2)
     }
   }
 }
