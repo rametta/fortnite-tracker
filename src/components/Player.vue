@@ -80,19 +80,15 @@
       </v-layout>
     </div>
 
-    <v-layout class="table__overflow">
-      <v-flex class="mt-3 mx-3">
-        <v-card>
-          <v-card-title>
+    <v-flex class="mt-3 mx-3">
+      <v-card>
+        <v-card-text>
 
-            <v-flex>
-              <player-chart :chart-data="chartData" :options="options" />
-            </v-flex>
+          <line-chart :chart-data="chartData" :options="options" />
 
-          </v-card-title>
-        </v-card>
-      </v-flex>
-    </v-layout>
+        </v-card-text>
+      </v-card>
+    </v-flex>
 
   </div>
 </template>
@@ -100,13 +96,13 @@
 <script>
 import { mapState } from 'vuex'
 import firebase from 'firebase'
-import PlayerChart from './PlayerChart'
+import LineChart from './LineChart'
 
 const db = firebase.database()
 
 export default {
   name: 'player',
-  components: { PlayerChart },
+  components: { LineChart },
   data: () => ({
     chartData: {},
     options: { responsive: true, maintainAspectRatio: false },

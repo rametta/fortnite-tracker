@@ -2,7 +2,7 @@
   <v-app dark>
 
     <v-toolbar app fixed :color="color">
-      <router-link :to="{name: 'home'}" class="home-link white--text">
+      <router-link :to="{name: 'home'}" class="home-link white--text" exact>
         <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
