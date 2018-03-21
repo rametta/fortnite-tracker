@@ -85,30 +85,30 @@ export default {
       switch (this.$route.name) {
         case 'charts':
           return 'blue darken-4'
-        case 'home':
-          return 'grey darken-4'
         case 'info':
           return 'teal darken-4'
+        default:
+          return 'grey darken-4'
       }
     },
     avatarColor() {
       switch (this.$route.name) {
         case 'charts':
           return 'blue darken-2'
-        case 'home':
-          return 'grey darken-2'
         case 'info':
           return 'teal darken-2'
+        default:
+          return 'grey darken-2'
       }
     },
     chipColor() {
       switch (this.$route.name) {
         case 'charts':
           return 'blue darken-3'
-        case 'home':
-          return 'grey darken-3'
         case 'info':
           return 'teal darken-3'
+        default:
+          return 'grey darken-3'
       }
     }
   },
