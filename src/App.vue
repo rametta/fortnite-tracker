@@ -3,14 +3,13 @@
 
     <v-toolbar app fixed :color="color">
       <router-link :to="{name: 'home'}" class="home-link white--text" exact>
-        <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
+        <v-toolbar-title class="ml-0">Victory Squad 🎉</v-toolbar-title>
       </router-link>
       <v-spacer></v-spacer>
       <v-chip @click="like()" :color="chipColor" text-color="white">
         <v-avatar :class="avatarColor">{{likes}}</v-avatar>
         <v-icon>favorite</v-icon>
       </v-chip>
-
     </v-toolbar>
 
     <v-content>
@@ -83,32 +82,32 @@ export default {
       loading: state => state.loading
     }),
     color() {
-      switch (this.e2) {
-        case 0:
+      switch (this.$route.name) {
+        case 'charts':
           return 'blue darken-4'
-        case 1:
+        case 'home':
           return 'grey darken-4'
-        case 2:
+        case 'info':
           return 'teal darken-4'
       }
     },
     avatarColor() {
-      switch (this.e2) {
-        case 0:
+      switch (this.$route.name) {
+        case 'charts':
           return 'blue darken-2'
-        case 1:
+        case 'home':
           return 'grey darken-2'
-        case 2:
+        case 'info':
           return 'teal darken-2'
       }
     },
     chipColor() {
-      switch (this.e2) {
-        case 0:
+      switch (this.$route.name) {
+        case 'charts':
           return 'blue darken-3'
-        case 1:
+        case 'home':
           return 'grey darken-3'
-        case 2:
+        case 'info':
           return 'teal darken-3'
       }
     }
