@@ -1,25 +1,49 @@
 <template>
   <v-app dark>
 
-    <v-toolbar app fixed>
+    <v-toolbar app fixed :color="color">
       <router-link :to="{name: 'home'}" class="home-link white--text">
         <v-toolbar-title>Victory Squad 🎉</v-toolbar-title>
       </router-link>
+      <v-spacer></v-spacer>
+      <v-chip @click="like()" :color="chipColor" text-color="white">
+        <v-avatar :class="avatarColor">{{likes}}</v-avatar>
+        <v-icon>favorite</v-icon>
+      </v-chip>
+
     </v-toolbar>
 
     <v-content>
-      <v-container fluid>
+      <v-container>
         <transition name="fade">
           <router-view />
         </transition>
       </v-container>
     </v-content>
 
-    <v-footer app fixed>
-      <div class="vic-footer">
-        Made with {{getEmote}} by <a href="http://rametta.org" target="_blank">Jason</a>
-      </div>
-    </v-footer>
+    <v-card>
+      <v-bottom-nav
+        app
+        fixed
+        shift
+        :value="true"
+        :active.sync="e2"
+        :color="color"
+      >
+        <v-btn dark :to="{name: 'charts'}" exact>
+          <span>Charts</span>
+          <v-icon>insert_chart</v-icon>
+        </v-btn>
+        <v-btn dark :to="{name: 'home'}" exact>
+          <span>Home</span>
+          <v-icon>home</v-icon>
+        </v-btn>
+        <v-btn dark :to="{name: 'info'}" exact>
+          <span>Info</span>
+          <v-icon>info</v-icon>
+        </v-btn>
+      </v-bottom-nav>
+    </v-card>
 
   </v-app>
 </template>
@@ -44,58 +68,69 @@ const db = app.database()
 export default {
   name: 'App',
   data: () => ({
-    emojis: [
-      '🍺',
-      '🍓',
-      '🥚',
-      '🥘',
-      '🍌',
-      '🍗',
-      '🍟',
-      '🍊',
-      '🥐',
-      '🥜',
-      '🍕',
-      '🍔',
-      '🍪',
-      '🥤',
-      '🍿',
-      '🥧',
-      '🍞',
-      '🍳',
-      '☕️',
-      '🍩',
-      '🍉'
-    ]
+    e2: 1,
+    likes: 0
   }),
   methods: {
-    ...mapMutations(['updateData', 'setLoading'])
+    ...mapMutations(['updateData', 'setLoading']),
+    like() {
+      this.likes++
+      db.ref('/meta/likes').set(this.likes)
+    }
   },
   computed: {
     ...mapState({
       loading: state => state.loading
     }),
-    getEmote() {
-      return this.emojis[Math.floor(Math.random() * this.emojis.length)]
+    color() {
+      switch (this.e2) {
+        case 0:
+          return 'blue darken-4'
+        case 1:
+          return 'grey darken-4'
+        case 2:
+          return 'teal darken-4'
+      }
+    },
+    avatarColor() {
+      switch (this.e2) {
+        case 0:
+          return 'blue darken-2'
+        case 1:
+          return 'grey darken-2'
+        case 2:
+          return 'teal darken-2'
+      }
+    },
+    chipColor() {
+      switch (this.e2) {
+        case 0:
+          return 'blue darken-3'
+        case 1:
+          return 'grey darken-3'
+        case 2:
+          return 'teal darken-3'
+      }
     }
   },
   created() {
     this.setLoading(true)
-    db.ref('/data').on('value', data => {
-      this.setLoading(false)
-      const d = data.val()
+
+    db.ref('/data').on('value', snap => {
+      const d = snap.val()
       const arr = Object.keys(d).map(key => d[key])
       this.updateData({ data: arr })
+      this.setLoading(false)
+    })
+
+    db.ref('/meta/likes').on('value', snap => {
+      this.likes = snap.val()
     })
   }
 }
 </script>
 
 <style>
-.vic-footer {
-  text-align: center;
-  width: 100%;
-}
 .home-link {
   text-decoration: none;
 }
@@ -113,5 +148,9 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+
+.jason {
+  background: #303030;
 }
 </style>
