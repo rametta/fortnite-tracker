@@ -56,11 +56,7 @@
 
               <v-flex column>
                 <v-flex d-flex row v-once class="big">
-                  <div>{{getMode(m.p)}}
-                    <!-- <div class="text-xs-center">
-                      <v-chip small color="blue">Top 3</v-chip>
-                    </div> -->
-                  </div>
+                  <div>{{getMode(m.p)}} </div>
                   <div class="text-xs-right">
                     <v-icon v-if="m.c > 0" color="green accent-3">keyboard_arrow_up</v-icon>
                     <v-icon v-if="m.c < 0" color="red">keyboard_arrow_down</v-icon>
@@ -68,7 +64,15 @@
                   </div>
                 </v-flex>
                 <v-flex d-flex row>
-                  <div :class="{'red--text': !m.k}">{{m.k}} {{m.k === 1 ? 'kill' : 'kills'}}</div>
+                  <div>
+                    <span :class="{'red--text': !m.k}">{{m.k}} {{m.k === 1 ? 'kill' : 'kills'}}</span>
+                    <span v-if="!m.t1">
+                      <small class="yellow--text ml-3" v-if="m.t3">Top 3</small>
+                      <small class="yellow--text ml-3" v-if="m.t5">Top 5</small>
+                      <small class="yellow--text ml-3" v-if="m.t6 && !m.t3">Top 6</small>
+                      <small class="yellow--text ml-3" v-if="m.t10 ">Top 10</small>
+                    </span>
+                  </div>
                   <div class="text-xs-right">+{{m.s}} Score</div>
                 </v-flex>
                 <small :class="m.t1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(m.d)}}</small>
