@@ -125,6 +125,7 @@
         </div>
       </v-tab-item>
 
+      <!-- Bests -->
       <v-tab-item>
         <v-card class="my-3" v-if="bests && bests.kills">
           <v-card-title>
@@ -175,19 +176,19 @@ export default {
     bests: {},
     weeklyTableHeaders: [
       { text: 'Week', value: 'week' },
-      { text: 'Kills', value: 'k' },
-      { text: 'Kills/Match', value: 'kpm' },
-      { text: 'Matches', value: 'mp' },
-      { text: 'Win %', value: 'wp' },
-      { text: 'Score', value: 's' },
-      { text: 'Wins', value: 't1' },
-      { text: 'Top 3', value: 't3' },
-      { text: 'Top 5', value: 't5' },
-      { text: 'Top 6', value: 't6' },
-      { text: 'Top 10', value: 't10' },
-      { text: 'Top 12', value: 't12' },
-      { text: 'Top 25', value: 't25' },
-      { text: 'Regression', value: 'r' }
+      { text: 'Kills', value: 'k', align: 'right' },
+      { text: 'Kills/Match', value: 'kpm', align: 'right' },
+      { text: 'Matches', value: 'mp', align: 'right' },
+      { text: 'Win %', value: 'wp', align: 'right' },
+      { text: 'Score', value: 's', align: 'right' },
+      { text: 'Wins', value: 't1', align: 'right' },
+      { text: 'Top 3', value: 't3', align: 'right' },
+      { text: 'Top 5', value: 't5', align: 'right' },
+      { text: 'Top 6', value: 't6', align: 'right' },
+      { text: 'Top 10', value: 't10', align: 'right' },
+      { text: 'Top 12', value: 't12', align: 'right' },
+      { text: 'Top 25', value: 't25', align: 'right' },
+      { text: 'Regression', value: 'r', align: 'right' }
     ],
     weekly: [],
     pagination: {
