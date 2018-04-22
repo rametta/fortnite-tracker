@@ -24,13 +24,12 @@
       <v-bottom-nav
         app
         fixed
-        shift
         :value="true"
         :active.sync="e2"
         :color="color"
       >
-        <v-btn dark :to="{name: 'charts'}" exact>
-          <span>Charts</span>
+        <v-btn dark :to="{name: 'weekly'}" exact>
+          <span>Weekly</span>
           <v-icon>insert_chart</v-icon>
         </v-btn>
         <v-btn dark :to="{name: 'home'}" exact>
@@ -83,7 +82,7 @@ export default {
     }),
     color() {
       switch (this.$route.name) {
-        case 'charts':
+        case 'weekly':
           return 'blue darken-4'
         case 'info':
           return 'teal darken-4'
@@ -93,7 +92,7 @@ export default {
     },
     avatarColor() {
       switch (this.$route.name) {
-        case 'charts':
+        case 'weekly':
           return 'blue darken-2'
         case 'info':
           return 'teal darken-2'
@@ -103,7 +102,7 @@ export default {
     },
     chipColor() {
       switch (this.$route.name) {
-        case 'charts':
+        case 'weekly':
           return 'blue darken-3'
         case 'info':
           return 'teal darken-3'
@@ -147,9 +146,5 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
-}
-
-.jason {
-  background: #303030;
 }
 </style>

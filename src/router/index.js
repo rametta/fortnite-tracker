@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Player from '@/components/Player'
 import Info from '@/components/Info'
-import Charts from '@/components/Charts'
+import Weekly from '@/components/Weekly'
 
 Vue.use(Router)
 
@@ -21,9 +21,9 @@ export default new Router({
       component: Player
     },
     {
-      path: '/charts',
-      name: 'charts',
-      component: Charts
+      path: '/weekly',
+      name: 'weekly',
+      component: Weekly
     },
     {
       path: '/info',
