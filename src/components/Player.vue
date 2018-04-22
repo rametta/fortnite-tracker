@@ -289,20 +289,6 @@ export default {
       })
       return weeksArr
     }
-  },
-  filters: {
-    percent: val => {
-      return (val * 100).toFixed(1)
-    },
-    toFix: (val, decs) => {
-      if (!val) {
-        return ''
-      }
-      return parseFloat(val).toFixed(decs)
-    },
-    number: val => {
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    }
   }
 }
 </script>

@@ -3,6 +3,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
+import './filters'
 
 import 'vuetify/dist/vuetify.min.css'
 
