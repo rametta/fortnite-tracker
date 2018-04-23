@@ -150,6 +150,17 @@
             </v-card-text>
           </v-card>
         </v-flex>
+
+        <v-flex class="mt-3">
+          <v-card>
+            <v-card-text>
+
+              <h3>Win % by week</h3>
+              <line-chart :chart-data="weekChartData" :options="options" />
+
+            </v-card-text>
+          </v-card>
+        </v-flex>
       </v-tab-item>
     </v-tabs>
 
@@ -169,6 +180,7 @@ export default {
   data: () => ({
     active: null,
     chartData: {},
+    weekChartData: {},
     options: { responsive: true, maintainAspectRatio: false },
     groupMatchesDates: [],
     groupedMatches: {},
@@ -204,7 +216,34 @@ export default {
 
     // Weekly
     db.ref(`/weeklySummary/${this.$route.params.id}`).once('value', snap => {
-      this.weekly = snap.val()
+      const val = snap.val()
+      this.weekly = val
+
+      // Week Chart
+      const years = Object.keys(val)
+      const weeks = years.map(year => ({ year, weeks: Object.keys(val[year]) }))
+
+      const labels = [].concat(
+        ...weeks.map(obj => obj.weeks.map(week => `${obj.year}.${week}`))
+      )
+
+      const data = [].concat(
+        ...years.map(year =>
+          Object.keys(val[year]).map(week =>
+            parseFloat(val[year][week]['wp'] * 100).toFixed(2)
+          )
+        )
+      )
+
+      const datasets = [
+        {
+          label: 'Win %',
+          backgroundColor: '#f4424e',
+          data
+        }
+      ]
+
+      this.$set(this, 'weekChartData', { labels, datasets })
     })
 
     // Daily

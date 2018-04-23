@@ -62,10 +62,10 @@ export default {
     ],
     items: [],
     startWeekDate: moment()
-      .week(moment().week())
+      .startOf('week')
       .format('ll'),
     endWeekDate: moment()
-      .week(moment().week() + 1)
+      .endOf('week')
       .format('ll')
   }),
   created() {
