@@ -1,168 +1,164 @@
 <template>
   <div>
 
-    <v-layout>
-      <v-flex>
-        <div class="player-code">{{$route.params.id}}</div>
-      </v-flex>
+    <v-layout justify-space-between row class="mx-3">
+      <div class="player-code">{{$route.params.id}}</div>
+
+      <v-menu offset-y>
+        <v-btn color="primary" dark slot="activator">{{active}} <v-icon right>arrow_drop_down</v-icon></v-btn>
+        <v-list>
+          <v-list-tile v-for="(value, key) in dropdowns" :key="key" @click="active = value">
+            <v-list-tile-title>{{value}}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-layout>
 
-    <v-tabs v-model="active" slider-color="yellow" grow>
-      <v-tab ripple>Daily</v-tab>
-      <v-tab ripple>Weekly</v-tab>
-      <v-tab ripple>Bests</v-tab>
-      <v-tab ripple>Chart</v-tab>
+    <div v-if="active === dropdowns.daily">
+      <div v-for="date in groupMatchesDates" :key="date">
+        <v-layout>
+          <v-flex class="ma-3">
 
-      <!-- Daily -->
-      <v-tab-item>
-        <div v-for="date in groupMatchesDates" :key="date">
-          <v-layout>
-            <v-flex class="mt-3">
+            <h3>{{date}}</h3>
 
-              <h3>{{date}}</h3>
+            <v-card>
+              <v-card-title>
 
-              <v-card>
-                <v-card-title>
-
-                  <v-layout row wrap justify-space-between>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <div class="big grey--text text--lighten-1">Matches</div>
-                      <div class="big-num">{{groupedMatchesSummaries[date].m}}</div>
-                    </v-flex>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <h4 class="big grey--text text--lighten-1">Kills</h4>
-                      <div class="big-num">{{groupedMatchesSummaries[date].k}}</div>
-                    </v-flex>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <h4 class="big grey--text text--lighten-1">KPM</h4>
-                      <div class="big-num">{{groupedMatchesSummaries[date].kpm}}</div>
-                    </v-flex>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <h4 class="big grey--text text--lighten-1">Wins</h4>
-                      <div class="big-num">{{groupedMatchesSummaries[date].t1}}</div>
-                    </v-flex>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <h4 class="big grey--text text--lighten-1">Top 3</h4>
-                      <div class="big-num">{{groupedMatchesSummaries[date].t3}}</div>
-                    </v-flex>
-                    <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
-                      <h4 class="big grey--text text--lighten-1">Top 6</h4>
-                      <div class="big-num">{{groupedMatchesSummaries[date].t6}}</div>
-                    </v-flex>
-                  </v-layout>
-
-                </v-card-title>
-              </v-card>
-
-            </v-flex>
-          </v-layout>
-
-          <v-layout row wrap>
-            <v-flex xl3 lg4 md6 xs12 v-for="m in groupedMatches[date]" :key="m.id" class="pa-3">
-              <v-card :color="m.t1 === 1 ? 'green': ''">
-                <v-card-title>
-
-                  <v-flex column>
-                    <v-flex d-flex row v-once class="big">
-                      <div>{{getMode(m.p)}} </div>
-                      <div class="text-xs-right">
-                        <v-icon v-if="m.c > 0" color="green accent-3">keyboard_arrow_up</v-icon>
-                        <v-icon v-if="m.c < 0" color="red">keyboard_arrow_down</v-icon>
-                        {{cleanChange(m.c)}}
-                      </div>
-                    </v-flex>
-                    <v-flex d-flex row>
-                      <div>
-                        <span :class="{'red--text': !m.k}">{{m.k}} {{m.k === 1 ? 'kill' : 'kills'}}</span>
-                        <span v-if="!m.t1">
-                          <small class="yellow--text ml-3" v-if="m.t3">Top 3</small>
-                          <small class="yellow--text ml-3" v-if="m.t5">Top 5</small>
-                          <small class="yellow--text ml-3" v-if="m.t6 && !m.t3">Top 6</small>
-                          <small class="yellow--text ml-3" v-if="m.t10 ">Top 10</small>
-                        </span>
-                      </div>
-                      <div class="text-xs-right">+{{m.s}} Score</div>
-                    </v-flex>
-                    <small :class="m.t1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(m.d)}}</small>
+                <v-layout row wrap justify-space-between>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <div class="big grey--text text--lighten-1">Matches</div>
+                    <div class="big-num">{{groupedMatchesSummaries[date].m}}</div>
                   </v-flex>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <h4 class="big grey--text text--lighten-1">Kills</h4>
+                    <div class="big-num">{{groupedMatchesSummaries[date].k}}</div>
+                  </v-flex>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <h4 class="big grey--text text--lighten-1">KPM</h4>
+                    <div class="big-num">{{groupedMatchesSummaries[date].kpm}}</div>
+                  </v-flex>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <h4 class="big grey--text text--lighten-1">Wins</h4>
+                    <div class="big-num">{{groupedMatchesSummaries[date].t1}}</div>
+                  </v-flex>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <h4 class="big grey--text text--lighten-1">Top 3</h4>
+                    <div class="big-num">{{groupedMatchesSummaries[date].t3}}</div>
+                  </v-flex>
+                  <v-flex xl2 lg2 md2 sm4 xs6 class="pa-1 text-xs-center">
+                    <h4 class="big grey--text text--lighten-1">Top 6</h4>
+                    <div class="big-num">{{groupedMatchesSummaries[date].t6}}</div>
+                  </v-flex>
+                </v-layout>
 
-                </v-card-title>
-              </v-card>
-            </v-flex>
+              </v-card-title>
+            </v-card>
+
+          </v-flex>
+        </v-layout>
+
+        <v-layout row wrap>
+          <v-flex xl3 lg4 md6 xs12 v-for="m in groupedMatches[date]" :key="m.id" class="pa-3">
+            <v-card :color="m.t1 === 1 ? 'green': ''">
+              <v-card-title>
+
+                <v-flex column>
+                  <v-flex d-flex row v-once class="big">
+                    <div>{{getMode(m.p)}} </div>
+                    <div class="text-xs-right">
+                      <v-icon v-if="m.c > 0" color="green accent-3">keyboard_arrow_up</v-icon>
+                      <v-icon v-if="m.c < 0" color="red">keyboard_arrow_down</v-icon>
+                      {{cleanChange(m.c)}}
+                    </div>
+                  </v-flex>
+                  <v-flex d-flex row>
+                    <div>
+                      <span :class="{'red--text': !m.k}">{{m.k}} {{m.k === 1 ? 'kill' : 'kills'}}</span>
+                      <span v-if="!m.t1">
+                        <small class="yellow--text ml-3" v-if="m.t3">Top 3</small>
+                        <small class="yellow--text ml-3" v-if="m.t5">Top 5</small>
+                        <small class="yellow--text ml-3" v-if="m.t6 && !m.t3">Top 6</small>
+                        <small class="yellow--text ml-3" v-if="m.t10 ">Top 10</small>
+                      </span>
+                    </div>
+                    <div class="text-xs-right">+{{m.s}} Score</div>
+                  </v-flex>
+                  <small :class="m.t1 === 1 ? 'white--text' : 'grey--text'" v-once>{{getDate(m.d)}}</small>
+                </v-flex>
+
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </div>
+    </div>
+
+    <div v-if="active === dropdowns.weekly">
+      <div v-for="(value, key) in weekly" :key="key" class="ma-3">
+        <h3>{{key}}</h3>
+        <v-data-table
+          :headers="weeklyTableHeaders"
+          :items="getItems(value)"
+          item-key="week"
+          :must-sort="true"
+          :pagination.sync="pagination"
+          class="elevation-2"
+        >
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.week }}</td>
+            <td class="text-xs-right">{{ props.item.k }}</td>
+            <td class="text-xs-right">{{ props.item.kpm | toFix(2)}}</td>
+            <td class="text-xs-right">{{ props.item.mp }}</td>
+            <td class="text-xs-right">{{ props.item.wp | percent}}</td>
+            <td class="text-xs-right">{{ props.item.s | number}}</td>
+            <td class="text-xs-right">{{ props.item.t1 }}</td>
+            <td class="text-xs-right">{{ props.item.t3 }}</td>
+            <td class="text-xs-right">{{ props.item.t5 }}</td>
+            <td class="text-xs-right">{{ props.item.t6 }}</td>
+            <td class="text-xs-right">{{ props.item.t10 }}</td>
+            <td class="text-xs-right">{{ props.item.t12 }}</td>
+            <td class="text-xs-right">{{ props.item.t25 }}</td>
+            <td class="text-xs-right">{{ props.item.lr.gradient }}</td>
+          </template>
+        </v-data-table>
+      </div>
+    </div>
+
+    <div v-if="active === dropdowns.bests">
+      <v-card class="ma-3" v-if="bests && bests.kills">
+        <v-card-title>
+          <v-layout justify-space-between>
+            <h1>Kills</h1>
+            <h1>{{bests.kills.k}}</h1>
           </v-layout>
-        </div>
-      </v-tab-item>
+        </v-card-title>
+        <small class="grey--text pl-3">{{getDate(bests.kills.d)}}</small>
+      </v-card>
+    </div>
 
-      <!-- Weekly -->
-      <v-tab-item>
-        <div v-for="(value, key) in weekly" :key="key" class="mt-3">
-          <h3>{{key}}</h3>
-          <v-data-table
-            :headers="weeklyTableHeaders"
-            :items="getItems(value)"
-            item-key="week"
-            :must-sort="true"
-            :pagination.sync="pagination"
-            class="elevation-2"
-          >
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.week }}</td>
-              <td class="text-xs-right">{{ props.item.k }}</td>
-              <td class="text-xs-right">{{ props.item.kpm | toFix(2)}}</td>
-              <td class="text-xs-right">{{ props.item.mp }}</td>
-              <td class="text-xs-right">{{ props.item.wp | percent}}</td>
-              <td class="text-xs-right">{{ props.item.s | number}}</td>
-              <td class="text-xs-right">{{ props.item.t1 }}</td>
-              <td class="text-xs-right">{{ props.item.t3 }}</td>
-              <td class="text-xs-right">{{ props.item.t5 }}</td>
-              <td class="text-xs-right">{{ props.item.t6 }}</td>
-              <td class="text-xs-right">{{ props.item.t10 }}</td>
-              <td class="text-xs-right">{{ props.item.t12 }}</td>
-              <td class="text-xs-right">{{ props.item.t25 }}</td>
-              <td class="text-xs-right">{{ props.item.lr.gradient }}</td>
-            </template>
-          </v-data-table>
-        </div>
-      </v-tab-item>
+    <div v-if="active === dropdowns.charts">
+      <v-flex class="ma-3">
+        <v-card>
+          <v-card-text>
 
-      <!-- Bests -->
-      <v-tab-item>
-        <v-card class="my-3" v-if="bests && bests.kills">
-          <v-card-title>
-            <v-layout justify-space-between>
-              <h1>Kills</h1>
-              <h1>{{bests.kills.k}}</h1>
-            </v-layout>
-          </v-card-title>
-          <small class="grey--text pl-3">{{getDate(bests.kills.d)}}</small>
+            <h3>Last 30 Matches</h3>
+            <line-chart :chart-data="chartData" :options="options" />
+
+          </v-card-text>
         </v-card>
-      </v-tab-item>
+      </v-flex>
 
-      <!-- Chart -->
-      <v-tab-item lazy>
-        <v-flex class="mt-3">
-          <v-card>
-            <v-card-text>
+      <v-flex class="ma-3">
+        <v-card>
+          <v-card-text>
 
-              <h3>Last 30 Matches</h3>
-              <line-chart :chart-data="chartData" :options="options" />
+            <h3>Win % by week</h3>
+            <line-chart :chart-data="weekChartData" :options="options" />
 
-            </v-card-text>
-          </v-card>
-        </v-flex>
-
-        <v-flex class="mt-3">
-          <v-card>
-            <v-card-text>
-
-              <h3>Win % by week</h3>
-              <line-chart :chart-data="weekChartData" :options="options" />
-
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-tab-item>
-    </v-tabs>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </div>
 
   </div>
 </template>
@@ -178,7 +174,13 @@ export default {
   name: 'player',
   components: { LineChart },
   data: () => ({
-    active: null,
+    dropdowns: {
+      daily: 'Daily',
+      weekly: 'Weekly',
+      bests: 'Bests',
+      charts: 'Charts'
+    },
+    active: 'Daily',
     chartData: {},
     weekChartData: {},
     options: { responsive: true, maintainAspectRatio: false },
