@@ -1,9 +1,11 @@
 {
   "name": "Victory Squad 🎉",
+  "short_name": "Victory Squad 🎉",
+  "start_url": "/",
   "description": "Fortnite stats for the squad",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/static/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

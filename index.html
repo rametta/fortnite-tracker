@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
-    <div id="app"></div>
+  <script> (function () { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js'); } })(); </script>
+  <div id="app"></div>
 </body>
 
 </html>
