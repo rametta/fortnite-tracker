@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <div class="mb-3 grey--text">To be played when exiting the bus...</div>
-    <audio controls>
-      <source src="static/freefallin.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <div class="mt-3 grey--text">Made with {{getEmote}} by <a href="http://rametta.org">Jason</a></div>
-  </div>
+  <div class="mt-3 grey--text">Made with {{getEmote}} by <a href="http://rametta.org">Jason</a></div>
 </template>
 
 <script>
