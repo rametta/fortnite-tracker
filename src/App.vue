@@ -36,9 +36,9 @@
           <span>Home</span>
           <v-icon>home</v-icon>
         </v-btn>
-        <v-btn dark :to="{name: 'info'}" exact>
-          <span>Info</span>
-          <v-icon>info</v-icon>
+        <v-btn dark :to="{name: 'feed'}" exact>
+          <span>Feed</span>
+          <v-icon>flash_on</v-icon>
         </v-btn>
       </v-bottom-nav>
     </v-card>
@@ -84,7 +84,7 @@ export default {
       switch (this.$route.name) {
         case 'weekly':
           return 'blue darken-4'
-        case 'info':
+        case 'feed':
           return 'teal darken-4'
         default:
           return 'grey darken-4'
@@ -94,7 +94,7 @@ export default {
       switch (this.$route.name) {
         case 'weekly':
           return 'blue darken-2'
-        case 'info':
+        case 'feed':
           return 'teal darken-2'
         default:
           return 'grey darken-2'
@@ -104,7 +104,7 @@ export default {
       switch (this.$route.name) {
         case 'weekly':
           return 'blue darken-3'
-        case 'info':
+        case 'feed':
           return 'teal darken-3'
         default:
           return 'grey darken-3'

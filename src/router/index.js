@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Player from '@/components/Player'
-import Info from '@/components/Info'
+import Feed from '@/components/Feed'
 import Weekly from '@/components/Weekly'
 
 Vue.use(Router)
@@ -26,9 +26,9 @@ export default new Router({
       component: Weekly
     },
     {
-      path: '/info',
-      name: 'info',
-      component: Info
+      path: '/feed',
+      name: 'feed',
+      component: Feed
     }
   ]
 })
