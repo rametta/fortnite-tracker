@@ -58,8 +58,6 @@ export default {
       const flattenMatches = [].concat.apply([], matches)
       const sortedMatches = flattenMatches.sort((a, b) => b.unix - a.unix)
       this.feed = sortedMatches
-
-      console.log(sortedMatches)
     })
   }
 }
