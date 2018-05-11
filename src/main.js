@@ -3,9 +3,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
+import VueAnalytics from 'vue-analytics'
 import './filters'
-
 import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(VueAnalytics, {
+  id: 'UA-119038838-1',
+  router
+})
 
 Vue.use(Vuetify)
 
