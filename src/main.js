@@ -9,7 +9,10 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(VueAnalytics, {
   id: 'UA-119038838-1',
-  router
+  router,
+  debug: {
+    sendHitTask: process.env.NODE_ENV === 'production'
+  }
 })
 
 Vue.use(Vuetify)
