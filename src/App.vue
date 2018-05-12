@@ -15,7 +15,9 @@
     <v-content>
       <v-container>
         <transition name="fade">
-          <router-view />
+          <keep-alive>
+            <router-view />
+          </keep-alive>
         </transition>
       </v-container>
     </v-content>
