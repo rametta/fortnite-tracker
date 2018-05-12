@@ -7,17 +7,20 @@
       <v-menu offset-y>
         <v-btn color="primary" dark slot="activator">{{routes[$route.name]}} <v-icon right>arrow_drop_down</v-icon></v-btn>
         <v-list v-if="$route.params.id">
-          <v-list-tile :to="{ name: 'playerDaily', params: { id: $route.params.id } }" tag="div" @click="active = 'Daily'">
+          <v-list-tile :to="{ name: 'playerDaily', params: { id: $route.params.id } }" tag="div">
             <v-list-tile-title class="white--text">Daily</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile :to="{ name: 'playerWeekly', params: { id: $route.params.id } }" tag="div" @click="active = 'Weekly'">
+          <v-list-tile :to="{ name: 'playerWeekly', params: { id: $route.params.id } }" tag="div">
             <v-list-tile-title class="white--text">Weekly</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile :to="{ name: 'playerBests', params: { id: $route.params.id } }" tag="div" @click="active = 'Bests'">
+          <v-list-tile :to="{ name: 'playerBests', params: { id: $route.params.id } }" tag="div">
             <v-list-tile-title class="white--text">Bests</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile :to="{ name: 'playerCharts', params: { id: $route.params.id } }" tag="div" @click="active = 'Charts'">
+          <v-list-tile :to="{ name: 'playerCharts', params: { id: $route.params.id } }" tag="div">
             <v-list-tile-title class="white--text">Charts</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile :to="{ name: 'playerClips', params: { id: $route.params.id } }" tag="div">
+            <v-list-tile-title class="white--text">Clips</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -28,7 +31,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'player',
   data: () => ({
@@ -36,7 +38,8 @@ export default {
       playerDaily: 'Daily',
       playerWeekly: 'Weekly',
       playerBests: 'Bests',
-      playerCharts: 'Charts'
+      playerCharts: 'Charts',
+      playerClips: 'Clips'
     }
   })
 }

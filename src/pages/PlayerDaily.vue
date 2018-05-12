@@ -96,7 +96,7 @@ export default {
     db
       .ref(`/matches/${this.$route.params.id}`)
       .orderByChild('d')
-      .limitToLast(50)
+      .limitToLast(30)
       .once('value', snap => {
         const matchesMap = snap.val()
         const keys = Object.keys(matchesMap)

@@ -6,6 +6,8 @@ import PlayerDaily from '@/pages/PlayerDaily'
 import PlayerWeekly from '@/pages/PlayerWeekly'
 import PlayerBests from '@/pages/PlayerBests'
 import PlayerCharts from '@/pages/PlayerCharts'
+import PlayerClips from '@/pages/PlayerClips'
+import PlayerClip from '@/pages/PlayerClip'
 import Feed from '@/pages/Feed'
 import Weekly from '@/pages/Weekly'
 
@@ -44,6 +46,11 @@ export default new Router({
           path: 'charts',
           name: 'playerCharts',
           component: PlayerCharts
+        },
+        {
+          path: 'clips',
+          name: 'playerClips',
+          component: PlayerClips
         }
       ]
     },
@@ -56,6 +63,11 @@ export default new Router({
       path: '/feed',
       name: 'feed',
       component: Feed
+    },
+    {
+      path: '/clip/:clipId/:playerId',
+      name: 'playerClip',
+      component: PlayerClip
     }
   ]
 })
