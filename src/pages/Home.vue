@@ -188,11 +188,11 @@ export default {
   },
   computed: {
     ...mapState({
-      modes: state => state.modes,
-      modeData: state => state.modeData,
-      lifetime: state => state.lifetime,
-      loading: state => state.loading,
-      error: state => state.error
+      modes: (state) => state.modes,
+      modeData: (state) => state.modeData,
+      lifetime: (state) => state.lifetime,
+      loading: (state) => state.loading,
+      error: (state) => state.error
     })
   }
 }

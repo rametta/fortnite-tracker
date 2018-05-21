@@ -26,9 +26,7 @@ const state = {
       { text: 'Top 25', value: 'Top25s' },
       { text: 'Kills', value: 'Kills' },
       { text: 'KD', value: 'K/d' },
-      { text: 'Kills/Min', value: 'KillsPerMin' },
       { text: 'Score', value: 'Score' },
-      { text: 'Avg. Survival', value: 'AvgSurvivalTime' },
       { text: 'Updated', value: 'lastUpdate' }
     ],
     data: []
@@ -46,13 +44,9 @@ const state = {
         { text: 'Top 6', value: 'top6' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
@@ -68,13 +62,9 @@ const state = {
         { text: 'Top 12', value: 'top12' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
@@ -90,13 +80,9 @@ const state = {
         { text: 'Top 25', value: 'top25' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
@@ -112,13 +98,9 @@ const state = {
         { text: 'Top 6', value: 'top6' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
@@ -134,13 +116,9 @@ const state = {
         { text: 'Top 12', value: 'top12' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
@@ -156,13 +134,9 @@ const state = {
         { text: 'Top 25', value: 'top25' },
         { text: 'Kills', value: 'kills' },
         { text: 'KD', value: 'kd' },
-        { text: 'Kills/Min', value: 'kpm' },
         { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Min', value: 'scorePerMin' },
         { text: 'Score/Game', value: 'scorePerMatch' },
         { text: 'Score', value: 'score' },
-        { text: 'Mins. Played', value: 'minutesPlayed' },
-        { text: 'Avg. Time Played', value: 'avgTimePlayed' },
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []

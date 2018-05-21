@@ -15,9 +15,7 @@
     <v-content>
       <v-container>
         <transition name="fade">
-          <keep-alive>
-            <router-view />
-          </keep-alive>
+          <router-view />
         </transition>
       </v-container>
     </v-content>
@@ -80,7 +78,7 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: state => state.loading
+      loading: (state) => state.loading
     }),
     color() {
       switch (this.$route.name) {
@@ -116,14 +114,14 @@ export default {
   created() {
     this.setLoading(true)
 
-    db.ref('/data').on('value', snap => {
+    db.ref('/data').on('value', (snap) => {
       const d = snap.val()
-      const arr = Object.keys(d).map(key => d[key])
+      const arr = Object.keys(d).map((key) => d[key])
       this.updateData({ data: arr })
       this.setLoading(false)
     })
 
-    db.ref('/meta/likes').on('value', snap => {
+    db.ref('/meta/likes').on('value', (snap) => {
       this.likes = snap.val()
     })
   }

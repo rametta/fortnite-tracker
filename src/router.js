@@ -25,7 +25,7 @@ export default new Router({
       path: '/player/:id',
       name: 'player',
       component: Player,
-      redirect: '/player/:id/daily', // daily tab is default
+      redirect: { name: 'playerDaily' }, // daily tab is default
       children: [
         {
           path: 'daily',
