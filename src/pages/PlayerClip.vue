@@ -3,6 +3,7 @@
     <video ref="video" class="full-width-100" controls autoplay>
       Your browser does not support HTML5 video.
     </video>
+    <v-progress-linear v-if="loading" :indeterminate="true"></v-progress-linear>
   </div>
 </template>
 
@@ -13,16 +14,28 @@ const db = firebase.database()
 export default {
   name: 'playerClip',
   data: () => ({
-    clip: {}
+    loading: true
   }),
   mounted() {
     db
-      .ref(`/clips/${this.$route.params.playerId}/${this.$route.params.clipId}`)
-      .once('value', snap => {
+      .ref(
+        `/clips/${this.$route.params.playerId.toLowerCase()}/${
+          this.$route.params.clipId
+        }`
+      )
+      .once('value', (snap) => {
         const clip = snap.val()
-        console.log(clip.video)
-        this.$refs.video.src = clip.video
-        this.$refs.video.play()
+        const video = this.$refs.video
+        video.src = clip.video
+        video.addEventListener(
+          'loadeddata',
+          () => {
+            video.play()
+            this.loading = false
+          },
+          false
+        )
+        video.load()
       })
   }
 }

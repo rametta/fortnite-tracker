@@ -35,18 +35,22 @@ export default {
     clips: []
   }),
   created() {
-    db.ref(`/clips/${this.$route.params.id}`).once('value', snap => {
-      const clipMap = snap.val()
-      if (clipMap) {
-        this.clips = Object.keys(clipMap)
-          .map(key => clipMap[key])
-          .sort((a, b) => moment(a.date).isBefore(moment(b.date)))
-      }
-    })
+    db
+      .ref(`/clips/${this.$route.params.id.toLowerCase()}`)
+      .once('value', (snap) => {
+        const clipMap = snap.val()
+        if (clipMap) {
+          this.clips = Object.keys(clipMap)
+            .map((key) => clipMap[key])
+            .sort((a, b) => moment(b.date).diff(moment(a.date)))
+        }
+      })
   },
   methods: {
     getDate(dateStr) {
-      return moment(dateStr).format('lll')
+      return moment(dateStr)
+        .local()
+        .format('ll')
     }
   }
 }
