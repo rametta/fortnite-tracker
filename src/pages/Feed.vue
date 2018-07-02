@@ -27,6 +27,7 @@
 <script>
 import firebase from 'firebase'
 import moment from 'moment'
+import { toMaybe, map, justs, pipe } from 'sanctuary'
 
 const db = firebase.database()
 
@@ -36,28 +37,54 @@ const modeMap = {
   p2: 'solo'
 }
 
+// recentMatches :: data -> users -> UserMatches[]
+const recentMatches = ({ data, users }) =>
+  map((user) => ({
+    user,
+    maybeMatches: toMaybe(data[user].recentMatches)
+  }))(users)
+
+// convertMatches :: UserMatches[] -> Maybe[] formattedMatch[]
+const convertMatches = map(({ maybeMatches, user }) =>
+  map(map(formatMatch(user)))(maybeMatches)
+)
+
+// formatMatch :: user -> match -> formattedMatch
+const formatMatch = (user) => (match) => ({
+  ...match,
+  user,
+  fromNow: moment.utc(match.dateCollected).fromNow(),
+  unix: moment(match.dateCollected).unix(),
+  mode: modeMap[match.playlist]
+})
+
+// flattenMatches = match[][] -> match[]
+const flattenMatches = (matches) => [].concat.apply([], matches)
+
+// sortMatches = match[] -> match[]
+const sortMatches = (matches) => matches.sort((a, b) => b.unix - a.unix)
+
+const pipeline = pipe([
+  recentMatches,
+  convertMatches,
+  justs,
+  flattenMatches,
+  sortMatches
+])
+
 export default {
   data: () => ({
     feed: []
   }),
   created() {
-    db.ref('/data').once('value', snap => {
-      const val = snap.val()
-      const users = Object.keys(val)
+    db.ref('/data').once('value', (snap) => {
+      const data = snap.val()
+      const users = Object.keys(data)
 
-      const matches = users.map(user =>
-        val[user].recentMatches.map(match => {
-          match.user = user
-          match.fromNow = moment.utc(match.dateCollected).fromNow()
-          match.unix = moment(match.dateCollected).unix()
-          match.mode = modeMap[match.playlist]
-          return match
-        })
-      )
-
-      const flattenMatches = [].concat.apply([], matches)
-      const sortedMatches = flattenMatches.sort((a, b) => b.unix - a.unix)
-      this.feed = sortedMatches
+      this.feed = pipeline({
+        data,
+        users
+      })
     })
   }
 }
