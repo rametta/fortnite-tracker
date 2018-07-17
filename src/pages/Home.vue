@@ -95,6 +95,18 @@ export default {
       curr_p10: {
         sortBy: 'top1',
         descending: true
+      },
+      prior_p2: {
+        sortBy: 'top1',
+        descending: true
+      },
+      prior_p9: {
+        sortBy: 'top1',
+        descending: true
+      },
+      prior_p10: {
+        sortBy: 'top1',
+        descending: true
       }
     }
   }),
