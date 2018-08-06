@@ -2,14 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Player from '@/pages/Player'
-import PlayerDaily from '@/pages/PlayerDaily'
-import PlayerWeekly from '@/pages/PlayerWeekly'
-import PlayerBests from '@/pages/PlayerBests'
-import PlayerCharts from '@/pages/PlayerCharts'
-import PlayerClips from '@/pages/PlayerClips'
-import PlayerClip from '@/pages/PlayerClip'
+import PlayerXbox from '@/pages/PlayerXbox'
+import PlayerPC from '@/pages/PlayerPC'
 import Feed from '@/pages/Feed'
-import Weekly from '@/pages/Weekly'
+import PC from '@/pages/PC'
 
 Vue.use(Router)
 
@@ -25,49 +21,29 @@ export default new Router({
       path: '/player/:id',
       name: 'player',
       component: Player,
-      redirect: { name: 'playerDaily' }, // daily tab is default
+      redirect: { name: 'playerXbox' }, // default redirected tab
       children: [
         {
-          path: 'daily',
-          name: 'playerDaily',
-          component: PlayerDaily
+          path: 'xbox',
+          name: 'playerXbox',
+          component: PlayerXbox
         },
         {
-          path: 'weekly',
-          name: 'playerWeekly',
-          component: PlayerWeekly
-        },
-        {
-          path: 'bests',
-          name: 'playerBests',
-          component: PlayerBests
-        },
-        {
-          path: 'charts',
-          name: 'playerCharts',
-          component: PlayerCharts
-        },
-        {
-          path: 'clips',
-          name: 'playerClips',
-          component: PlayerClips
+          path: 'pc',
+          name: 'playerPC',
+          component: PlayerPC
         }
       ]
     },
     {
-      path: '/weekly',
-      name: 'weekly',
-      component: Weekly
+      path: '/pc',
+      name: 'pc',
+      component: PC
     },
     {
       path: '/feed',
       name: 'feed',
       component: Feed
-    },
-    {
-      path: '/clip/:clipId/:playerId',
-      name: 'playerClip',
-      component: PlayerClip
     }
   ]
 })

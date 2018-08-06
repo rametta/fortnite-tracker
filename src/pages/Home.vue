@@ -95,18 +95,6 @@ export default {
       curr_p10: {
         sortBy: 'top1',
         descending: true
-      },
-      prior_p2: {
-        sortBy: 'top1',
-        descending: true
-      },
-      prior_p9: {
-        sortBy: 'top1',
-        descending: true
-      },
-      prior_p10: {
-        sortBy: 'top1',
-        descending: true
       }
     }
   }),
@@ -200,11 +188,11 @@ export default {
   },
   computed: {
     ...mapState({
-      modes: (state) => state.modes,
-      modeData: (state) => state.modeData,
-      lifetime: (state) => state.lifetime,
-      loading: (state) => state.loading,
-      error: (state) => state.error
+      modes: state => state.modes,
+      modeData: state => state.modeData,
+      lifetime: state => state.lifetime,
+      loading: state => state.loading,
+      error: state => state.error
     })
   }
 }

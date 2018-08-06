@@ -28,13 +28,13 @@
         :active.sync="e2"
         :color="color"
       >
-        <v-btn dark :to="{name: 'weekly'}" exact>
-          <span>Weekly</span>
-          <v-icon>insert_chart</v-icon>
+        <v-btn dark :to="{name: 'pc'}" exact>
+          <span>PC</span>
+          <v-icon>laptop</v-icon>
         </v-btn>
         <v-btn dark :to="{name: 'home'}" exact>
-          <span>Home</span>
-          <v-icon>home</v-icon>
+          <span>Xbox</span>
+          <v-icon>videogame_asset</v-icon>
         </v-btn>
         <v-btn dark :to="{name: 'feed'}" exact>
           <span>Feed</span>
@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: (state) => state.loading
+      loading: state => state.loading
     }),
     color() {
       switch (this.$route.name) {
@@ -114,14 +114,14 @@ export default {
   created() {
     this.setLoading(true)
 
-    db.ref('/data').on('value', (snap) => {
+    db.ref('/data').on('value', snap => {
       const d = snap.val()
-      const arr = Object.keys(d).map((key) => d[key])
+      const arr = Object.keys(d).map(key => d[key])
       this.updateData({ data: arr })
       this.setLoading(false)
     })
 
-    db.ref('/meta/likes').on('value', (snap) => {
+    db.ref('/meta/likes').on('value', snap => {
       this.likes = snap.val()
     })
   }

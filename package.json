@@ -2,7 +2,7 @@
   "name": "fortnite-tracker",
   "version": "1.0.0",
   "description": "View fortnite statistics",
-  "author": "Jason <rametta@outlook.com>",
+  "author": "Jason Rametta <rametta@outlook.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -11,13 +11,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "chart.js": "^2.7.2",
     "firebase": "^4.11.0",
     "moment": "^2.22.1",
     "sanctuary": "^0.15.0",
     "vue": "^2.5.2",
     "vue-analytics": "^5.10.4",
-    "vue-chartjs": "^3.2.1",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.8",
     "vuex": "^3.0.1"

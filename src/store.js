@@ -10,10 +10,7 @@ const state = {
     { name: 'Solo', code: 'p2' },
     { name: 'Current Season Squad', code: 'curr_p9' },
     { name: 'Current Season Duo', code: 'curr_p10' },
-    { name: 'Current Season Solo', code: 'curr_p2' },
-    { name: 'Prior Season Squad', code: 'prior_p9' },
-    { name: 'Prior Season Duo', code: 'prior_p10' },
-    { name: 'Prior Season Solo', code: 'prior_p2' }
+    { name: 'Current Season Solo', code: 'curr_p2' }
   ],
 
   lifetime: {
@@ -143,61 +140,6 @@ const state = {
         { text: 'TRN Rating', value: 'trnRating' }
       ],
       data: []
-    },
-
-    // Prior Season Squad
-    prior_p9: {
-      fields: [
-        { text: 'User', value: 'user' },
-        { text: 'Matches', value: 'matches' },
-        { text: 'Wins', value: 'top1' },
-        { text: 'Win %', value: 'winRatio' },
-        { text: 'Top 3', value: 'top3' },
-        { text: 'Top 6', value: 'top6' },
-        { text: 'Kills', value: 'kills' },
-        { text: 'KD', value: 'kd' },
-        { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Game', value: 'scorePerMatch' },
-        { text: 'Score', value: 'score' },
-        { text: 'TRN Rating', value: 'trnRating' }
-      ],
-      data: []
-    },
-    // Prior Season Duo
-    prior_p10: {
-      fields: [
-        { text: 'User', value: 'user' },
-        { text: 'Matches', value: 'matches' },
-        { text: 'Wins', value: 'top1' },
-        { text: 'Win %', value: 'winRatio' },
-        { text: 'Top 5', value: 'top5' },
-        { text: 'Top 12', value: 'top12' },
-        { text: 'Kills', value: 'kills' },
-        { text: 'KD', value: 'kd' },
-        { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Game', value: 'scorePerMatch' },
-        { text: 'Score', value: 'score' },
-        { text: 'TRN Rating', value: 'trnRating' }
-      ],
-      data: []
-    },
-    // Prior Season Solo
-    prior_p2: {
-      fields: [
-        { text: 'User', value: 'user' },
-        { text: 'Matches', value: 'matches' },
-        { text: 'Wins', value: 'top1' },
-        { text: 'Win %', value: 'winRatio' },
-        { text: 'Top 10', value: 'top10' },
-        { text: 'Top 25', value: 'top25' },
-        { text: 'Kills', value: 'kills' },
-        { text: 'KD', value: 'kd' },
-        { text: 'Kills/Game', value: 'kpg' },
-        { text: 'Score/Game', value: 'scorePerMatch' },
-        { text: 'Score', value: 'score' },
-        { text: 'TRN Rating', value: 'trnRating' }
-      ],
-      data: []
     }
   },
 
@@ -209,7 +151,7 @@ const mutations = {
   updateData(state, { data }) {
     // Create a lifetime stats map for each player
     // and assign to state
-    state.lifetime.data = data.map((d) => {
+    state.lifetime.data = data.map(d => {
       d.lifeTimeStatsMap = d.lifeTimeStats.reduce((acc, stat) => {
         acc[stat.key.replace(/\s/g, '')] = stat.value
         return acc
@@ -224,10 +166,10 @@ const mutations = {
     })
 
     // Stats per mode data
-    state.modes.forEach((mode) => {
+    state.modes.forEach(mode => {
       state.modeData[mode.code].data = data
-        .filter((p) => p.stats[mode.code] !== undefined)
-        .map((p) => {
+        .filter(p => p.stats[mode.code] !== undefined)
+        .map(p => {
           p.stats[mode.code].user = { displayValue: p.epicUserHandle }
           return p.stats[mode.code]
         })

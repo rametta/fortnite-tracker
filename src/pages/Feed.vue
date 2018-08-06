@@ -39,7 +39,7 @@ const modeMap = {
 
 // recentMatches :: data -> users -> UserMatches[]
 const recentMatches = ({ data, users }) =>
-  map((user) => ({
+  map(user => ({
     user,
     maybeMatches: toMaybe(data[user].recentMatches)
   }))(users)
@@ -50,7 +50,7 @@ const convertMatches = map(({ maybeMatches, user }) =>
 )
 
 // formatMatch :: user -> match -> formattedMatch
-const formatMatch = (user) => (match) => ({
+const formatMatch = user => match => ({
   ...match,
   user,
   fromNow: moment.utc(match.dateCollected).fromNow(),
@@ -59,10 +59,10 @@ const formatMatch = (user) => (match) => ({
 })
 
 // flattenMatches = match[][] -> match[]
-const flattenMatches = (matches) => [].concat.apply([], matches)
+const flattenMatches = matches => [].concat.apply([], matches)
 
 // sortMatches = match[] -> match[]
-const sortMatches = (matches) => matches.sort((a, b) => b.unix - a.unix)
+const sortMatches = matches => matches.sort((a, b) => b.unix - a.unix)
 
 const pipeline = pipe([
   recentMatches,
@@ -77,7 +77,7 @@ export default {
     feed: []
   }),
   created() {
-    db.ref('/data').once('value', (snap) => {
+    db.ref('/data').once('value', snap => {
       const data = snap.val()
       const users = Object.keys(data)
 
